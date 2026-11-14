@@ -309,5 +309,32 @@
   ],
   "pk": "15693f5ebbf16f65",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261114-8730",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-14T22:51:43",
+  "referral_source": "💬 WhatsApp",
+  "total": 1139,
+  "count": 4,
+  "items": [
+   "FSH",
+   "LH",
+   "TSH",
+   "Prolactin (PRL)"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-15T22:51:43"
+  },
+  "pk": "15693f5ebbf16f65",
+  "discount": 201,
+  "contact": {
+   "name": "Meme",
+   "phone": "201019848137"
+  },
+  "visit_type": "lab"
  }
 ]
