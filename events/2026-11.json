@@ -292,5 +292,22 @@
    "phone": "201007013365"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261114-8730",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-14T22:51:21",
+  "referral_source": "💬 WhatsApp",
+  "total": 1340,
+  "count": 4,
+  "items": [
+   "FSH",
+   "LH",
+   "TSH",
+   "Prolactin (PRL)"
+  ],
+  "pk": "15693f5ebbf16f65",
+  "visit_type": "lab"
  }
 ]
