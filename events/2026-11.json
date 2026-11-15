@@ -390,5 +390,34 @@
   ],
   "pk": "5bf36e158f980bcb",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261115-2427",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T20:21:37",
+  "referral_source": "غير محدد",
+  "total": 1800,
+  "count": 6,
+  "items": [
+   "CBC",
+   "ALT (SGPT)",
+   "Creatinine (Serum)",
+   "TSH",
+   "Ca++",
+   "Vitamin D3(25 Hydroxy Cholecal.)"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-16T20:21:37"
+  },
+  "pk": "5bf36e158f980bcb",
+  "discount": 450,
+  "contact": {
+   "name": "ذكري",
+   "phone": "213670264050"
+  },
+  "visit_type": "lab"
  }
 ]
