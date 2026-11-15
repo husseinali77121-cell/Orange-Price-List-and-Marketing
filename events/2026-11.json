@@ -433,5 +433,33 @@
   ],
   "pk": "5bf36e158f980bcb",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261115-4248",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T20:25:47",
+  "referral_source": "غير محدد",
+  "total": 1646,
+  "count": 5,
+  "items": [
+   "FSH",
+   "LH",
+   "Prolactin (PRL)",
+   "Testosterone Free",
+   "DHEA-S"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-16T20:25:47"
+  },
+  "pk": "5bf36e158f980bcb",
+  "discount": 314,
+  "contact": {
+   "name": "ذكري",
+   "phone": "213670264050"
+  },
+  "visit_type": "lab"
  }
 ]
