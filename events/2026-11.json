@@ -350,5 +350,31 @@
   ],
   "pk": "26f342126c8ab0b0",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261115-6585",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T18:42:14",
+  "referral_source": "غير محدد",
+  "total": 750,
+  "count": 3,
+  "items": [
+   "Herpes (I) IgM",
+   "Herpes (II)  IgG",
+   "Herpes (II)  IgM"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-16T18:42:14"
+  },
+  "pk": "26f342126c8ab0b0",
+  "discount": 150,
+  "contact": {
+   "name": "Shad",
+   "phone": "201044669899"
+  },
+  "visit_type": "lab"
  }
 ]
