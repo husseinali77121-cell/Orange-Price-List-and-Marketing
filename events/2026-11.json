@@ -419,5 +419,19 @@
    "phone": "213670264050"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261115-4248",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T20:24:24",
+  "referral_source": "غير محدد",
+  "total": 350,
+  "count": 1,
+  "items": [
+   "FSH"
+  ],
+  "pk": "5bf36e158f980bcb",
+  "visit_type": "lab"
  }
 ]
