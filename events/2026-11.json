@@ -376,5 +376,19 @@
    "phone": "201044669899"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261115-2427",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T20:20:31",
+  "referral_source": "غير محدد",
+  "total": 400,
+  "count": 1,
+  "items": [
+   "CBC"
+  ],
+  "pk": "5bf36e158f980bcb",
+  "visit_type": "lab"
  }
 ]
