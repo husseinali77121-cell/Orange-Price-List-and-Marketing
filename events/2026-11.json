@@ -336,5 +336,19 @@
    "phone": "201019848137"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261115-6585",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-15T18:41:33",
+  "referral_source": "غير محدد",
+  "total": 300,
+  "count": 1,
+  "items": [
+   "Herpes (I) IgM"
+  ],
+  "pk": "26f342126c8ab0b0",
+  "visit_type": "lab"
  }
 ]
