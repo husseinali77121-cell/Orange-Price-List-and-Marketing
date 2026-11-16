@@ -518,5 +518,13 @@
   "branch": "Orange (La Cité)",
   "ts": "2026-11-16T15:13:15",
   "total": 2000
+ },
+ {
+  "type": "lost_sale",
+  "quote_id": "OR-261115-2427",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-16T15:36:35",
+  "reason": "السعر",
+  "total": 1800
  }
 ]
