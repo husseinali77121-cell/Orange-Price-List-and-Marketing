@@ -610,5 +610,19 @@
    "by": "Hussein",
    "note": "branch Diamond"
   }
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261116-3341",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-16T20:42:38",
+  "referral_source": "غير محدد",
+  "total": 400,
+  "count": 1,
+  "items": [
+   "CBC"
+  ],
+  "pk": "beb8b380f88cc78d",
+  "visit_type": "lab"
  }
 ]
