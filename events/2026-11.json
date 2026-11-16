@@ -534,5 +534,19 @@
   "ts": "2026-11-16T15:37:02",
   "reason": "السعر",
   "total": 1646
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261116-9140",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-16T17:03:25",
+  "referral_source": "غير محدد",
+  "total": 400,
+  "count": 1,
+  "items": [
+   "CBC"
+  ],
+  "pk": "0dd4753af5ab0f25",
+  "visit_type": "lab"
  }
 ]
