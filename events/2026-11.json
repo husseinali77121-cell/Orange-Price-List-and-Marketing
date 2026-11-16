@@ -475,5 +475,34 @@
   ],
   "pk": "582ff00bf9128f6e",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261116-2471",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-16T10:07:40",
+  "referral_source": "غير محدد",
+  "total": 4252,
+  "count": 6,
+  "items": [
+   "Anti Thyroid Antibodies",
+   "Anti-SSA (Ro) Abs",
+   "Anti-SSB (La) Abs",
+   "Anti CCP",
+   "RF (Quantit)",
+   "Tissue transglutaminase Ab (IgA)"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-17T10:07:40"
+  },
+  "pk": "582ff00bf9128f6e",
+  "discount": 1063,
+  "contact": {
+   "name": "Saher",
+   "phone": "201041199576"
+  },
+  "visit_type": "lab"
  }
 ]
