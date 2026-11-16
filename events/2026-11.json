@@ -684,5 +684,20 @@
   ],
   "pk": "2c966b10b63b3aff",
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261117-9358",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-17T00:33:40",
+  "referral_source": "غير محدد",
+  "total": 680,
+  "count": 2,
+  "items": [
+   "FSH",
+   "LH"
+  ],
+  "pk": "2c966b10b63b3aff",
+  "visit_type": "lab"
  }
 ]
