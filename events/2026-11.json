@@ -668,5 +668,21 @@
    "phone": "201033637171"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261117-4417",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-17T00:32:23",
+  "referral_source": "💬 WhatsApp",
+  "total": 1080,
+  "count": 3,
+  "items": [
+   "FSH",
+   "TSH",
+   "Insulin (Fasting)"
+  ],
+  "pk": "2c966b10b63b3aff",
+  "visit_type": "lab"
  }
 ]
