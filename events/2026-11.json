@@ -699,5 +699,36 @@
   ],
   "pk": "2c966b10b63b3aff",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261117-9358",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-17T00:35:19",
+  "referral_source": "غير محدد",
+  "total": 2048,
+  "count": 8,
+  "items": [
+   "FSH",
+   "LH",
+   "E2 (Estradiol)",
+   "Testosterone Total",
+   "TSH",
+   "Prolactin (PRL)",
+   "Insulin (Fasting)",
+   "FBG"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-18T00:35:19"
+  },
+  "pk": "2c966b10b63b3aff",
+  "discount": 512,
+  "contact": {
+   "name": "Ruru",
+   "phone": "201106609401"
+  },
+  "visit_type": "lab"
  }
 ]
