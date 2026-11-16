@@ -640,5 +640,33 @@
   ],
   "pk": "beb8b380f88cc78d",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261116-3341",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-16T20:43:33",
+  "referral_source": "غير محدد",
+  "total": 994,
+  "count": 5,
+  "items": [
+   "CBC",
+   "CRP",
+   "ESR",
+   "ALT (SGPT)",
+   "Creatinine (Serum)"
+  ],
+  "meta": {
+   "followup_hours": 24,
+   "via": "one_tap",
+   "next_due": "2026-11-17T20:43:33"
+  },
+  "pk": "beb8b380f88cc78d",
+  "discount": 176,
+  "contact": {
+   "name": "Ghada Samy",
+   "phone": "201033637171"
+  },
+  "visit_type": "lab"
  }
 ]
