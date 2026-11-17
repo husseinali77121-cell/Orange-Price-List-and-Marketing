@@ -730,5 +730,13 @@
    "phone": "201106609401"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "lost_sale",
+  "quote_id": "OR-261109-8488",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-17T11:36:56",
+  "reason": "مش عارفين",
+  "total": 1920
  }
 ]
