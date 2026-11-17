@@ -38,7 +38,7 @@ REPLIES: List[dict] = [
      "long": ("{greet}\n\nوصلتنا الروشتة ✅ شكراً لحضرتك.\nبنراجع التحاليل المطلوبة وهنبعتلك الإجمالي وأي عروض أو "
               "باقات توفّر عليك خلال دقايق 🍊{fhv}")},
     {"id": "price_quote", "group": "start", "title": "عرض السعر (من الفاتورة)", "kind": "quote", "objection": "",
-     "followup_hours": 24, "reason": "", "action": "",
+     "followup_hours": 1, "reason": "", "action": "",
      "fallback": {"quote": "ابعتلنا أسماء التحاليل أو صورة الروشتة وهنبعتلك الإجمالي على طول 🍊"},
      "short": "{greet}{quote}{eta}{prep}{cta}{code}",
      "long": ("{greet}\n\nده عرض السعر للتحاليل المطلوبة 🍊{quote}{eta}{prep}{offers}{fhv}{cta}{branch}{code}"

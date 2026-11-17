@@ -119,7 +119,37 @@ check("optout by phone key excludes ALL that number's quotes",
       B not in [x["quote_id"] for k in q.values() for x in k], True)
 check("unsent quote not queued", E_ not in [x["quote_id"] for k in q.values() for x in k], True)
 check("contact carried to queue item", q["due"][0]["contact"]["name"], "Ahmed Ali")
-check("due_at = sent + 24h", q["due"][0]["due_at"], NOW - timedelta(hours=30) + timedelta(hours=24))
+check("due_at = sent + 1h (first follow-up opens an hour after sending)", q["due"][0]["due_at"],
+      NOW - timedelta(hours=30) + timedelta(hours=1))
+check("first follow-up deadline = sent + 5h", q["due"][0]["window_end"], NOW - timedelta(hours=30) + timedelta(hours=5))
+check("A (sent 30h ago) is flagged late but still listed as due", (q["due"][0]["late"], q["due"][0]["quote_id"]), (True, A))
+
+
+# نافذة أول متابعة: من ساعة لـ 5 ساعات بعد الإرسال
+def _win(hours_ago, extra=()):
+    X = "OR-261105-0900"
+    evs_ = [ev("quote", X, hours_ago + 1, branch="Diamond", total=500, phone_key="pkX", items=["CBC"]),
+            ev("sent", X, hours_ago, branch="Diamond"), *extra]
+    qq = followup_queue(evs_, NOW)
+    got = [(k, x) for k in ("due", "upcoming") for x in qq[k]]
+    return (got[0][0], got[0][1]) if got else (None, None)
+
+
+k, x = _win(0.5)
+check("sent 30 min ago -> upcoming (too early), not late", (k, x["late"]), ("upcoming", False))
+k, x = _win(1)
+check("sent 1h ago -> due, inside the window", (k, x["late"]), ("due", False))
+k, x = _win(3)
+check("sent 3h ago -> due, inside the window", (k, x["late"]), ("due", False))
+k, x = _win(5)
+check("sent exactly 5h ago -> still inside the window", (k, x["late"]), ("due", False))
+k, x = _win(6)
+check("sent 6h ago -> due but late (stays in the list)", (k, x["late"]), ("due", True))
+k, x = _win(4, extra=[ev("followup", "OR-261105-0900", 1)])
+check("after the first follow-up: retry in 24h, no window", (k, x["window_end"], x["late"], x["attempts"]),
+      ("upcoming", None, False, 1))
+k, x = _win(4, extra=[ev("followup", "OR-261105-0900", 1, meta={"next_due": (NOW - timedelta(minutes=5)).isoformat()})])
+check("scheduled retry that has come due is due and not 'late'", (k, x["late"]), ("due", False))
 
 # snooze: followup بميعاد بعد بكرة -> upcoming
 ev_snooze = events + [ev("followup", A, 1, meta={"next_due": (NOW + timedelta(hours=20)).isoformat()})]

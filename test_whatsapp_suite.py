@@ -282,7 +282,17 @@ fake, g, gh = invoice(state={"fu_hours": 0}, clicks={"btn_sent"})
 s0 = evs(gh, "sent")
 check("manual fallback button + «من غير متابعة»", (len(s0), s0[0]["meta"].get("followup_hours"), "next_due" in s0[0]["meta"]),
       (1, 0, False))
-check("follow-up default comes from Policy", invoice(config={"policy": {"followup_hours": 6}})[0].session_state["fu_hours"], 6)
+check("follow-up default comes from Policy (inside the 1-5h window)",
+      invoice(config={"policy": {"followup_hours": 4}})[0].session_state["fu_hours"], 4)
+check("old 24h policy (outside 1-5h) falls back to 1h",
+      invoice(config={"policy": {"followup_hours": 24}})[0].session_state["fu_hours"], 1)
+check("old 6h policy falls back to 1h",
+      invoice(config={"policy": {"followup_hours": 6}})[0].session_state["fu_hours"], 1)
+check("no policy -> 1h default", invoice()[0].session_state["fu_hours"], 1)
+fake, g, gh = invoice(state={"fu_hours": 5}, clicks={"btn_sent"})
+s5 = evs(gh, "sent")
+check("5h follow-up scheduled from the picker", (len(s5), s5[0]["meta"].get("followup_hours"), "next_due" in s5[0]["meta"]),
+      (1, 5, True))
 
 fake, g, gh = invoice(state={"_wa_last": {"intents": [{"intent": "price", "reply": "ask_prices", "keyword": "بكام"}],
                                           "text": "بكام؟", "has_media": False, "tests": 0}},

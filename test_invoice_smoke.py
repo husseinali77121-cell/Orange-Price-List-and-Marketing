@@ -221,8 +221,21 @@ fake, g, gh = page(FU, fu_ev)
 links = [c for c in fake.calls if c[0] == "link"]
 check("follow-up: due card with whatsapp to the stored number",
       any("wa.me/201012345678" in c[2] for c in links), True)
-check("follow-up message carries opt-out line", any("إيقاف" in unquote for unquote in
-                                                    [__import__("urllib.parse").parse.unquote(c[2]) for c in links]), True)
+from urllib.parse import unquote as _unq  # noqa: E402
+
+
+def _wa_texts(calls):
+    return [_unq(c[2].split("text=", 1)[1]) for c in calls if c[0] == "link" and "wa.me/201012345678" in c[2]
+            and "text=" in c[2]]
+
+
+check("first follow-up message = management text (greeting / first name / question), nothing else",
+      _wa_texts(links), ["مساء الخير\nAhmed\nفي اي مساعدة نقدر نقدمها لحضرتك بخصوص استفسارك عن التحاليل؟"])
+fu_ev2 = fu_ev + [ev("followup", "F1", 2, branch="Diamond",
+                     meta={"next_due": (T - timedelta(hours=1)).isoformat(timespec="seconds")})]
+fake, g, gh = page(FU, fu_ev2)
+check("second follow-up (reminder) still carries the opt-out line",
+      any("إيقاف" in t for t in _wa_texts(fake.calls)), True)
 fake, g, gh = page(FU, fu_ev, clicks={"f1_F1"})
 check("follow-up: 'contacted' logs followup with next_due",
       [(e["type"], bool(e.get("meta", {}).get("next_due"))) for e in gh.events() if e["type"] == "followup"],

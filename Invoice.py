@@ -61,9 +61,9 @@ from price_utils import (MATCH_ALIAS, MATCH_AMBIGUOUS, MATCH_EXACT,
                          reprice_saved_items, resolve_test, search_tests,
                          suggest_bundle_offers,
                          validate_patient_name, validate_phone)
-from tracking import (LOST_SALE_REASONS, REFERRAL_SOURCES, WHATSAPP_SOURCE, customer_profile,
-                      last_campaign_for, make_event, month_key, new_lead_id, phone_key,
-                      summarize_events)
+from tracking import (FOLLOWUP_MAX_HOURS, FOLLOWUP_MIN_HOURS, LOST_SALE_REASONS, REFERRAL_SOURCES,
+                      WHATSAPP_SOURCE, customer_profile, last_campaign_for, make_event, month_key,
+                      new_lead_id, phone_key, summarize_events)
 import replies as RP
 import wa_inquiry as WI
 from patient_prep import eta_text, prep_block
@@ -631,7 +631,7 @@ with st.expander("💬 استفسار واتساب — الصق المحادثة
         _lp = validate_phone(st.session_state.p_phone) if st.session_state.p_phone.strip() else None
         if not st.session_state["items"] and _lp and _lp.ok and get_event_store():
             _lk = f"_lead_{_lp.value}"
-            _fh = config_store.followup_hours(CFG) or 24
+            _fh = config_store.followup_hours(CFG) or FOLLOWUP_MIN_HOURS
             if st.session_state.get(_lk):
                 st.caption("🟡 اتسجّل كمستفسر — هيظهر في Follow-up لو مارجعش بالروشتة، وبيتقفل لوحده لما تعمله عرض.")
             elif st.button(f"🟡 سجّل كمستفسر + متابعة بعد {_fh} ساعة (لو مابعتش الروشتة)", key="wa_lead",
@@ -1367,9 +1367,9 @@ if not blockers:
                 pass  # التتبّع مش أولوية أعلى من إتمام الفاتورة نفسها
         st.session_state[_log_key] = True
 
-FU_OPTIONS = [3, 6, 24, 48, 72, 0]
-FU_LABELS = {0: "من غير متابعة", 3: "بعد 3 ساعات", 6: "بعد 6 ساعات", 24: "بكرة (24 ساعة)",
-             48: "بعد يومين", 72: "بعد 3 أيام"}
+# المتابعة من ساعة لـ 5 ساعات بعد إرسال العرض (0 = من غير متابعة)
+FU_OPTIONS = [*range(FOLLOWUP_MIN_HOURS, FOLLOWUP_MAX_HOURS + 1), 0]
+FU_LABELS = config_store.FOLLOWUP_LABELS
 _sent_key = f"_sent_{st.session_state.quote_id}"
 
 
@@ -1379,7 +1379,7 @@ def log_sent(via: str) -> bool:
     if not _store:
         flash("warning", "تتبّع العروض مش متظبط في الإعدادات (secrets)")
         return False
-    fh = int(st.session_state.get("fu_hours", 24) or 0)
+    fh = int(st.session_state.get("fu_hours", FOLLOWUP_MIN_HOURS) or 0)
     due = (datetime.now() + timedelta(hours=fh)).isoformat(timespec="seconds") if fh else ""
     try:
         _contact = ({"name": name_chk.value, "phone": phone_chk.value}
@@ -1426,8 +1426,9 @@ with s1:
         # ضغطة واحدة: بتفتح واتساب العميل وبتسجّل «اتبعت» + ميعاد المتابعة (جسر wa_bridge)
         st.session_state.setdefault("fu_hours", config_store.followup_hours(CFG))
         if st.session_state.fu_hours not in FU_OPTIONS:
-            st.session_state.fu_hours = 24
-        st.selectbox("⏰ المتابعة لو ماردّش", FU_OPTIONS, key="fu_hours", format_func=lambda h: FU_LABELS[h])
+            st.session_state.fu_hours = config_store.DEFAULT_FOLLOWUP_HOURS
+        st.selectbox("⏰ المتابعة لو ماردّش", FU_OPTIONS, key="fu_hours", format_func=lambda h: FU_LABELS[h],
+                     help=f"رسالة المتابعة بتتبعت خلال ساعة لـ {FOLLOWUP_MAX_HOURS} ساعات من إرسال العرض.")
         st.markdown(BRIDGE_CSS, unsafe_allow_html=True)
         _bv = st.text_input(BRIDGE_ARIA, key=f"wa_bridge_{st.session_state.bridge_gen}",
                             label_visibility="collapsed")

@@ -18,6 +18,13 @@ import tzsetup  # noqa: F401  (توقيت القاهرة لكل البرنامج
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 
+# نافذة أول متابعة بعد السؤال/إرسال العرض: تبدأ بعد ساعة وآخر ميعاد لها 5 ساعات.
+# بعد الـ 5 ساعات المتابعة لسه بتظهر في القايمة بس معلَّمة «متأخرة».
+FOLLOWUP_MIN_HOURS = 1
+FOLLOWUP_MAX_HOURS = 5
+# المحاولات اللي بعد الأولى (لو الموظف ماحدّدش ميعاد): بعد آخر متابعة بكام ساعة
+FOLLOWUP_RETRY_HOURS = 24
+
 # ------------------------------------------------------------
 # خيارات ثابتة تظهر في الواجهة (radio/selectbox)
 # ------------------------------------------------------------
@@ -309,7 +316,10 @@ def optout_keys(events: List[dict]) -> set:
 
 
 def followup_queue(events: List[dict], now: Optional[datetime] = None, *,
-                   first_after_hours: float = 24, stale_after_days: float = 14,
+                   first_after_hours: float = FOLLOWUP_MIN_HOURS,
+                   max_first_hours: float = FOLLOWUP_MAX_HOURS,
+                   retry_after_hours: float = FOLLOWUP_RETRY_HOURS,
+                   stale_after_days: float = 14,
                    max_attempts: int = 3, require_sent: bool = True,
                    visit_grace_hours: float = 3) -> dict:
     """
@@ -317,7 +327,10 @@ def followup_queue(events: List[dict], now: Optional[datetime] = None, *,
       due / upcoming / exhausted / stale = عروض اتبعتت (sent) من غير حجز ولا قرار
       visit_check = حجز ميعاده عدّى (أو عدّى 24 ساعة من الحجز من غير ميعاد) ولسه مفيش حضور
       booked      = حجوزات جاية
-    كل عنصر: سجل quote_records + due_at + attempts + age_days.
+    أول متابعة: بتبدأ بعد first_after_hours (ساعة) من إرسال العرض/الرد على الاستفسار، وآخر ميعاد
+    ليها max_first_hours (5 ساعات) من نفس الوقت — بعده بتفضل ظاهرة بس late=True.
+    المحاولات اللي بعدها (من غير ميعاد محدد): بعد آخر متابعة بـ retry_after_hours.
+    كل عنصر: سجل quote_records + due_at + attempts + age_days + window_end + late.
     """
     now = now or datetime.now()
     opted = optout_keys(events)
@@ -351,8 +364,17 @@ def followup_queue(events: List[dict], now: Optional[datetime] = None, *,
             continue
         nd = _parse_ts(r["next_due"]) if r["next_due"] else None
         last = _parse_ts(max(r["followups"])) if r["followups"] else None
-        due_at = nd or ((last or base) + timedelta(hours=first_after_hours))
+        if nd:
+            due_at = nd
+        elif last:
+            due_at = last + timedelta(hours=retry_after_hours)
+        else:
+            due_at = base + timedelta(hours=first_after_hours)
         item["due_at"] = due_at
+        # نافذة أول متابعة: آخر ميعاد = وقت الإرسال + 5 ساعات (المحاولات اللي بعدها من غير نافذة)
+        first = not item["attempts"]
+        item["window_end"] = (base + timedelta(hours=max_first_hours)) if first else None
+        item["late"] = bool(first and now > item["window_end"])
         item["age_days"] = (now - base).total_seconds() / 86400.0
         if now - base > timedelta(days=stale_after_days):
             out["stale"].append(item)

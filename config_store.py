@@ -16,7 +16,7 @@ from typing import Dict, List, Optional
 
 from brand import BRANCH_INFO, DEFAULT_PHONE, WORKING_HOURS_AR
 from campaigns import FREE_HOME_VISIT_SEED
-from tracking import DEFAULT_VIP_RULES
+from tracking import DEFAULT_VIP_RULES, FOLLOWUP_MAX_HOURS, FOLLOWUP_MIN_HOURS
 
 CONFIG_PATH = "config/app_config.json"
 SECTIONS = ("branches", "campaigns", "vip", "gifts", "staff", "areas", "links", "policy")
@@ -25,7 +25,14 @@ SECTIONS = ("branches", "campaigns", "vip", "gifts", "staff", "areas", "links", 
 # (discount_approval_pin في Secrets). الحد بقى 50% (كان 20%) وبيتعدّل من Branches ← Policy.
 # discount_limit_pct القديم في Secrets مابقاش مستخدم — الإعدادات هنا هي المرجع.
 DEFAULT_DISCOUNT_LIMIT_PCT = 50.0
-DEFAULT_POLICY = {"discount_limit_pct": DEFAULT_DISCOUNT_LIMIT_PCT, "followup_hours": 24}
+
+# المتابعة بعد إرسال العرض: من ساعة لـ 5 ساعات (0 = من غير متابعة). الافتراضي = ساعة (أول النافذة)
+# عشان الموظف يلحق يتابع قبل الـ 5 ساعات. القيم القديمة (3/6/24/48/72 ساعة) برّه النافذة بترجع للافتراضي.
+FOLLOWUP_CHOICES = (0, *range(FOLLOWUP_MIN_HOURS, FOLLOWUP_MAX_HOURS + 1))
+DEFAULT_FOLLOWUP_HOURS = FOLLOWUP_MIN_HOURS
+FOLLOWUP_LABELS = {0: "من غير متابعة", 1: "بعد ساعة", 2: "بعد ساعتين", 3: "بعد 3 ساعات",
+                   4: "بعد 4 ساعات", 5: "بعد 5 ساعات"}
+DEFAULT_POLICY = {"discount_limit_pct": DEFAULT_DISCOUNT_LIMIT_PCT, "followup_hours": DEFAULT_FOLLOWUP_HOURS}
 
 DEFAULT_AREAS = ["6 October", "Sheikh Zayed", "Other"]
 DEFAULT_GIFTS = [{"id": "welcome_gift", "name": "Welcome Gift", "cost": 0}]
@@ -78,12 +85,12 @@ def discount_limit(cfg: dict) -> float:
 
 
 def followup_hours(cfg: dict) -> int:
-    """ميعاد المتابعة الافتراضي بعد إرسال العرض (ساعات)."""
+    """ميعاد المتابعة الافتراضي بعد إرسال العرض (ساعات) — جوه نافذة الساعة..5 ساعات (أو 0 = من غير)."""
     try:
-        v = int(float((cfg.get("policy") or {}).get("followup_hours", 24)))
+        v = int(float((cfg.get("policy") or {}).get("followup_hours", DEFAULT_FOLLOWUP_HOURS)))
     except (TypeError, ValueError):
-        return 24
-    return v if v in (0, 3, 6, 24, 48, 72) else 24
+        return DEFAULT_FOLLOWUP_HOURS
+    return v if v in FOLLOWUP_CHOICES else DEFAULT_FOLLOWUP_HOURS
 
 
 def validate_policy(p: dict) -> List[str]:

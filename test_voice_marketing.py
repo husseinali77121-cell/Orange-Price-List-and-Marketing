@@ -8,7 +8,7 @@ import sys
 
 from labs_price_list import LABS_DB
 from bundles import BUNDLES
-from marketing import MARKETING_KINDS, build_marketing_message, share_url
+from marketing import MARKETING_KINDS, build_followup_message, build_marketing_message, share_url
 from price_utils import build_index, resolve_test
 from voice import mic_html, split_voice_command
 
@@ -44,8 +44,22 @@ rows = [{"name": "Lipid Profile", "price": 700, "saving": 250},
 m = build_marketing_message("offer", "ar", lab="معمل", name="أحمد", bundles=rows, currency="ج.م")
 check("offer shows saving", "توفير 250" in m and "أحمد" in m, True)
 check("offer hides zero saving", m.count("توفير") == 1, True)
-check("followup shows total", "1,200" in build_marketing_message(
-    "followup", "ar", lab="L", total=1200, currency="EGP"), True)
+FU_TXT = "في اي مساعدة نقدر نقدمها لحضرتك بخصوص استفسارك عن التحاليل؟"
+check("followup (ar) = management text with the customer name",
+      build_marketing_message("followup", "ar", lab="L", name="أحمد", total=1200, currency="EGP"),
+      f"مساء الخير\nأحمد\n{FU_TXT}")
+check("followup (ar) without a name drops the name line",
+      build_marketing_message("followup", "ar", lab="L"), f"مساء الخير\n{FU_TXT}")
+check("followup (en) still shows total", "1,200" in build_marketing_message(
+    "followup", "en", lab="L", total=1200, currency="EGP"), True)
+check("first follow-up (Follow-up page) = same text, no cta/code/opt-out",
+      build_followup_message(lab="L", name="Ahmed", attempt=0, total=900, cta="CTA", code="CODE"),
+      f"مساء الخير\nAhmed\n{FU_TXT}")
+check("first follow-up for a lead (no quote) = same text",
+      build_followup_message(lab="L", name="", attempt=0, lead=True), f"مساء الخير\n{FU_TXT}")
+_r1 = build_followup_message(lab="L", name="Ahmed", attempt=1, total=900, cta="CTA", code="CODE")
+check("reminders (attempt >= 1) keep their own text + code + opt-out",
+      ("مساء الخير" not in _r1, "CODE" in _r1, "إيقاف" in _r1), (True, True, True))
 check("review link only when set",
       "https://x.y" in build_marketing_message("review", "en", lab="L", review_url="https://x.y")
       and "http" not in build_marketing_message("review", "en", lab="L"), True)

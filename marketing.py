@@ -21,6 +21,17 @@ def share_url(message: str, phone_e164: str = "") -> str:
     return f"{base}?text={quote(message, safe='')}"
 
 
+# أول رسالة متابعة (بتتبعت من ساعة لـ 5 ساعات بعد السؤال/إرسال العرض). النص من الإدارة — التعديل هنا بس.
+FOLLOWUP_GREETING_AR = "مساء الخير"
+FOLLOWUP_ASK_AR = "في اي مساعدة نقدر نقدمها لحضرتك بخصوص استفسارك عن التحاليل؟"
+
+
+def first_followup_message(name: str = "") -> str:
+    """مساء الخير / اسم العميل / في اي مساعدة نقدر نقدمها… — سطر الاسم بيختفي لو مفيش اسم."""
+    name = (name or "").strip()
+    return "\n".join([FOLLOWUP_GREETING_AR, *([name] if name else []), FOLLOWUP_ASK_AR])
+
+
 def _greet(name: str, lang: str) -> str:
     name = (name or "").strip()
     if lang == "en":
@@ -57,8 +68,7 @@ def build_marketing_message(kind: str, lang: str = "ar", *, lab: str, name: str 
         if en:
             return (f"{g}\nJust checking on the quote we sent you{amt}. "
                     f"Happy to adjust the tests or book an appointment whenever suits you.")
-        return (f"{g}\nبنطمّن على عرض السعر اللي بعتناهولك{amt}. "
-                f"لو حابب تعدّل في التحاليل أو تحجز ميعاد إحنا تحت أمرك.")
+        return first_followup_message(name)
 
     if kind == "home_visit":
         if en:
@@ -101,7 +111,11 @@ def build_followup_message(*, lab: str, name: str = "", items=(), total: int = 0
     """رسالة متابعة لعرض اتبعت ولسه من غير قرار (صفحة «متابعة النهاردة»).
     attempt = كام محاولة اتعملت قبل كده — التسلسل: تذكير ودّي ← قيمة (سحب منزلي/حجز سهل) ← آخر
     تذكير خفيف. lead = استفسار من غير عرض سعر (لسه مستنيين الروشتة/أسماء التحاليل).
-    cta = سطور «للحجز ردّ برقم…» · code = سطر كود العرض."""
+    cta = سطور «للحجز ردّ برقم…» · code = سطر كود العرض.
+    أول متابعة (attempt = 0) = رسالة الإدارة القصيرة بالظبط (مساء الخير / الاسم / سؤال المساعدة) من غير
+    زيادات — العميل هو اللي سأل، فمفيش سطر إيقاف ولا كود. التذكيرات اللي بعدها (1، 2) زي ما هي."""
+    if attempt <= 0:
+        return first_followup_message(name)
     g = _greet(name, "ar")
     names = [str(i) for i in items][:4]
     more = len(list(items)) - len(names)
