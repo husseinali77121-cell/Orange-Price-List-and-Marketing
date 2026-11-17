@@ -100,11 +100,11 @@ with tab_p:
     lim = st.number_input("حد الخصم بدون موافقة (%)", min_value=0, max_value=100, step=5,
                           value=int(round(config_store.discount_limit(cfg))), key="pol_limit",
                           help="0 = مفيش حد. الافتراضي 50%.")
-    _fh_opts = [3, 6, 24, 48, 72, 0]
+    _fh_opts = [*config_store.FOLLOWUP_CHOICES[1:], 0]
     fh = st.selectbox("ميعاد المتابعة الافتراضي بعد إرسال العرض", _fh_opts,
                       index=_fh_opts.index(config_store.followup_hours(cfg)), key="pol_fu",
-                      format_func=lambda h: {0: "من غير متابعة", 3: "بعد 3 ساعات", 6: "بعد 6 ساعات",
-                                             24: "بكرة (24 ساعة)", 48: "بعد يومين", 72: "بعد 3 أيام"}[h])
+                      format_func=lambda h: config_store.FOLLOWUP_LABELS[h],
+                      help="المتابعة لازم تتم خلال ساعة لـ 5 ساعات من إرسال العرض/الرد على الاستفسار.")
     if not secret_str(st.secrets, "discount_approval_pin"):
         st.warning("⚠️ مفيش discount_approval_pin في Secrets — الخصم الكبير هيظهر تحذير بس ومش هيقفل الإرسال.")
     if st.button("💾 احفظ السياسة", type="primary", key="pol_save"):

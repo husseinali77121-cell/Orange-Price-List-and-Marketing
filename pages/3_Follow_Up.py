@@ -126,7 +126,12 @@ def _head(r, icon):
         t = f"{icon} 🟡 مستفسر (من غير عرض) · {r['branch'] or '—'}"
     else:
         t = f"{icon} {r['quote_id']} · {r['total']:,} ج · {r['branch'] or '—'}"
-    return t + (f" · {c['name']}" if c.get("name") else "")
+    return (t + (f" · {c['name']}" if c.get("name") else "")
+            + (" · ⏱ متأخرة" if r.get("late") else ""))
+
+
+def _age_txt(days: float) -> str:
+    return f"{days * 24:.1f} ساعة" if days < 1 else f"{days:.1f} يوم"
 
 
 def _lost_buttons(r, key_prefix_lost, key_prefix_reason):
@@ -138,9 +143,14 @@ def card(r: dict, due: bool):
     c = r.get("contact") or {}
     qid = r["quote_id"]
     with st.expander(_head(r, "🔴" if due else "🕒"), expanded=due and len(q["due"]) <= 3):
-        st.caption(f"اتبعت من {r['age_days']:.1f} يوم · محاولات: {r['attempts']}"
+        st.caption(f"اتبعت من {_age_txt(r['age_days'])} · محاولات: {r['attempts']}"
                    + (f" · حملة: {r['campaign_id']}" if r["campaign_id"] else "")
                    + (f" · {r['staff']}" if r["staff"] else "") + f" · ميعادها: {r['due_at']:%d-%m %H:%M}")
+        if r.get("window_end"):
+            # أول متابعة لازم تتم من ساعة لـ 5 ساعات من الإرسال؛ بعدها بتفضل ظاهرة بس معلَّمة متأخرة
+            st.caption(("🔴 عدّت نافذة الـ 5 ساعات — ابعت المتابعة دلوقتي · " if r.get("late")
+                        else "🟢 جوه نافذة المتابعة · " if due else "🕒 لسه بدري على المتابعة · ")
+                       + f"آخر ميعاد: {r['window_end']:%d-%m %H:%M}")
         if r["items"]:
             st.write("🧪 " + "، ".join(r["items"]))
         lead = bool(r.get("is_lead") and not r.get("quote_ts"))

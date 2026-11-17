@@ -30,7 +30,7 @@ from panels import BRANCHES, DEFAULT_BRANCH
 from price_utils import (MAX_WA_URL, build_index, format_phone_display, validate_phone)
 from promotions import PROMO_PATH, active_promotions
 from marketing import share_url
-from tracking import (WHATSAPP_SOURCE, customer_profile, can_schedule_followup, make_event, month_key,
+from tracking import (FOLLOWUP_MIN_HOURS, WHATSAPP_SOURCE, customer_profile, can_schedule_followup, make_event, month_key,
                       new_lead_id, optout_keys, phone_key, quote_records, stage_of)
 import wa_inquiry as WI
 from patient_prep import eta_text, prep_block
@@ -236,7 +236,7 @@ else:
     default_i = 1 if (tpl["followup_hours"] and rec) else 0
     outcome = st.radio("النتيجة", outcomes, index=default_i, key="rp_outcome", horizontal=True,
                        format_func=lambda k: {"none": "سجّل الرد بس",
-                                              "followup": f"⏰ متابعة بعد {tpl['followup_hours'] or 24} ساعة",
+                                              "followup": f"⏰ متابعة بعد {tpl['followup_hours'] or FOLLOWUP_MIN_HOURS} ساعة",
                                               "lost": "❌ فات / مش مكمّل"}[k])
     if rec:
         ok_f, why_f = can_schedule_followup(rec, now, opted=opted)
@@ -278,13 +278,13 @@ else:
                 evs.insert(0, make_event(
                     "lead", lead_id, branch=branch, referral_source=WHATSAPP_SOURCE, phone_key=PK, staff=STAFF.strip(),
                     contact=({"name": name.strip(), "phone": cust_phone} if STORE_CONTACTS else None),
-                    note=rid, meta={"next_due": (now + timedelta(hours=tpl["followup_hours"] or 24)).isoformat(timespec="seconds"),
+                    note=rid, meta={"next_due": (now + timedelta(hours=tpl["followup_hours"] or FOLLOWUP_MIN_HOURS)).isoformat(timespec="seconds"),
                                     "via": "reply"}))
                 note += " + اتسجّل مستفسر (Lead) بمتابعة"
             if outcome == "followup" and rec:
                 if ok_f:
                     evs.append(make_event("followup", qid, branch=branch, staff=STAFF.strip(),
-                                          meta={"next_due": (now + timedelta(hours=tpl["followup_hours"] or 24)).isoformat(timespec="seconds"),
+                                          meta={"next_due": (now + timedelta(hours=tpl["followup_hours"] or FOLLOWUP_MIN_HOURS)).isoformat(timespec="seconds"),
                                                 "via": "reply", "reply": rid}))
                     note += " + متابعة اتجدولت"
                 else:
