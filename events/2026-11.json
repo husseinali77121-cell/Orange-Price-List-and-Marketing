@@ -776,5 +776,33 @@
   ],
   "pk": "8f9d36412d5782a2",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261117-2882",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-17T21:31:53",
+  "referral_source": "غير محدد",
+  "total": 2100,
+  "count": 5,
+  "items": [
+   "CBC",
+   "Vitamin D3(25 Hydroxy Cholecal.)",
+   "TSH",
+   "Zinc (blood)",
+   "Ferritin"
+  ],
+  "meta": {
+   "followup_hours": 1,
+   "via": "one_tap",
+   "next_due": "2026-11-17T22:31:53"
+  },
+  "pk": "8f9d36412d5782a2",
+  "discount": 580,
+  "contact": {
+   "name": "مارينا كامل",
+   "phone": "201281188876"
+  },
+  "visit_type": "lab"
  }
 ]
