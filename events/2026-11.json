@@ -837,5 +837,47 @@
   "benefits": [
    "FHV-OCT-ZAYED"
   ]
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261118-8603",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-18T13:41:43",
+  "referral_source": "💬 WhatsApp",
+  "total": 7474,
+  "count": 16,
+  "items": [
+   "Kidney Profile",
+   "Liver Profile",
+   "Lipid Profile",
+   "Thyroid Profile",
+   "CBC",
+   "ABO",
+   "HbA1C",
+   "Stool Culture",
+   "Vitamin B12",
+   "Ferritin",
+   "Vitamin D3(25 Hydroxy Cholecal.)",
+   "HOMA1-IR",
+   "H.pylori Ag in Stool (Quanti)",
+   "Magnesium (Mg) serum",
+   "Zinc (blood)",
+   "Insulin (Fasting)"
+  ],
+  "meta": {
+   "followup_hours": 1,
+   "via": "one_tap",
+   "next_due": "2026-11-18T14:41:43"
+  },
+  "pk": "4c1f846aa3b59f05",
+  "discount": 2491,
+  "contact": {
+   "name": "مصطفي محرم",
+   "phone": "201009471497"
+  },
+  "visit_type": "lab",
+  "benefits": [
+   "FHV-OCT-ZAYED"
+  ]
  }
 ]
