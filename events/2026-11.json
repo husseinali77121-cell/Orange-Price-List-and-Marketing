@@ -903,5 +903,13 @@
   "ts": "2026-11-19T00:31:53",
   "reason": "مش بيرد",
   "total": 2100
+ },
+ {
+  "type": "lost_sale",
+  "quote_id": "OR-261117-9358",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-19T00:32:10",
+  "reason": "مش بيرد",
+  "total": 2048
  }
 ]
