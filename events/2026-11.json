@@ -879,5 +879,13 @@
   "benefits": [
    "FHV-OCT-ZAYED"
   ]
+ },
+ {
+  "type": "lost_sale",
+  "quote_id": "OR-261116-9140",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-18T21:03:26",
+  "reason": "تأجيل لوقت تاني",
+  "total": 6022
  }
 ]
