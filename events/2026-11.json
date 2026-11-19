@@ -933,5 +933,31 @@
   ],
   "pk": "2f6c9105cfa36cac",
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261119-2570",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-19T13:33:31",
+  "referral_source": "غير محدد",
+  "total": 1930,
+  "count": 3,
+  "items": [
+   "Vitamin D3(25 Hydroxy Cholecal.)",
+   "Thyroid Profile",
+   "Ferritin"
+  ],
+  "meta": {
+   "followup_hours": 1,
+   "via": "one_tap",
+   "next_due": "2026-11-19T14:33:31"
+  },
+  "pk": "2f6c9105cfa36cac",
+  "discount": 340,
+  "contact": {
+   "name": "ريماس سطام",
+   "phone": "966559549282"
+  },
+  "visit_type": "lab"
  }
 ]
