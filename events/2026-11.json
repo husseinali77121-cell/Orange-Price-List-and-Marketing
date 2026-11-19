@@ -919,5 +919,19 @@
   "ts": "2026-11-19T00:38:58",
   "reason": "هيفكر ويرد",
   "total": 7474
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261119-2570",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-19T13:32:47",
+  "referral_source": "غير محدد",
+  "total": 1000,
+  "count": 1,
+  "items": [
+   "Vitamin D3(25 Hydroxy Cholecal.)"
+  ],
+  "pk": "2f6c9105cfa36cac",
+  "visit_type": "lab"
  }
 ]
