@@ -986,5 +986,41 @@
   "pk": "c9df62f03468ccb1",
   "discount": 840,
   "visit_type": "lab"
+ },
+ {
+  "type": "sent",
+  "quote_id": "OR-261120-8441",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-20T08:49:10",
+  "referral_source": "💬 WhatsApp",
+  "total": 3360,
+  "count": 13,
+  "items": [
+   "Lipid Profile",
+   "CBC",
+   "HbA1C",
+   "Semen Examination",
+   "FSH",
+   "LH",
+   "HIV Combi Ag/Ab",
+   "Testosterone Total",
+   "Urea",
+   "Creatinine (Serum)",
+   "Uric Acid",
+   "ALT (SGPT)",
+   "AST (SGOT)"
+  ],
+  "meta": {
+   "followup_hours": 1,
+   "via": "one_tap",
+   "next_due": "2026-11-20T09:49:10"
+  },
+  "pk": "c9df62f03468ccb1",
+  "discount": 840,
+  "contact": {
+   "name": "الاستاذ محمد",
+   "phone": "201055548696"
+  },
+  "visit_type": "lab"
  }
 ]
