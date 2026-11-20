@@ -959,5 +959,32 @@
    "phone": "966559549282"
   },
   "visit_type": "lab"
+ },
+ {
+  "type": "quote",
+  "quote_id": "OR-261120-8441",
+  "branch": "Orange (La Cité)",
+  "ts": "2026-11-20T08:49:06",
+  "referral_source": "💬 WhatsApp",
+  "total": 3360,
+  "count": 13,
+  "items": [
+   "Lipid Profile",
+   "CBC",
+   "HbA1C",
+   "Semen Examination",
+   "FSH",
+   "LH",
+   "HIV Combi Ag/Ab",
+   "Testosterone Total",
+   "Urea",
+   "Creatinine (Serum)",
+   "Uric Acid",
+   "ALT (SGPT)",
+   "AST (SGOT)"
+  ],
+  "pk": "c9df62f03468ccb1",
+  "discount": 840,
+  "visit_type": "lab"
  }
 ]
